@@ -3,6 +3,7 @@ package com.lxy.mybatis.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import com.github.pagehelper.PageHelper;
 import com.lxy.mybatis.bean.Employee;
 import com.lxy.mybatis.dao.EmployeeMapper;
 import com.lxy.mybatis.dao.EmployeeMapperAnnotation;
@@ -51,9 +53,12 @@ public class MybatisTest {
 		
 		try {
 			EmployeeMapper employeeMapper = sqlSession.getMapper(EmployeeMapper.class);
-//			Employee employee = employeeMapper.getEmpById(1);
-			Employee employee = employeeMapper.getEmpByIdAndLastName(1, "Jam");
+			PageHelper.startPage(1, 2); 
+			Employee employee = employeeMapper.getEmpById(1);
+			Employee employee2 = employeeMapper.getEmpById(1);
+//			Employee employee = employeeMapper.getEmpByIdAndLastName(1, "Jam");
 			System.out.println(employee);
+			System.out.println(employee==employee2);
 		}finally {
 			sqlSession.close();
 		}
